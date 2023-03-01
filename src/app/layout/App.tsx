@@ -1,6 +1,8 @@
-function App() {
+import AccountOverviewPage from "../../features/account/AccountOverviewPage";
+
+const App = () => {
   return (
-    <h1>Hello</h1>
+    <AccountOverviewPage />
   );
 }
 
