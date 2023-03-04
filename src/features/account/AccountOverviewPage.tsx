@@ -12,7 +12,7 @@ const AccountOverviewPage = () => {
   }, []);
 
   return <div>
-    {accounts.map(account => <h1>{account.title}</h1>)}
+    {accounts.map(account => <small>{account.title}</small>)}
   </div>
 }
 
