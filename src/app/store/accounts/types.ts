@@ -1,8 +1,18 @@
+export interface AccountsState {
+  isFetching: boolean,
+  accounts: Account[],
+  account?: Account,
+}
+
 export interface Account {
   id: string
   title: string
   balance: number
   dateCreated: string
+}
+
+export interface FetchAccountInput {
+  id: string
 }
 
 export interface CreateAccount {
