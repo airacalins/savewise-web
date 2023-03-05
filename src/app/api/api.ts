@@ -1,9 +1,18 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
+import { EMPTY_STRING } from '../utilities/constant';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+
+axios.interceptors.request.use((config) => {
+  const user = localStorage.getItem('user');
+  const token = !!user ? JSON.parse(user).token : EMPTY_STRING;
+
+  if (token) config.headers!.Authorization = `Bearer ${token}`;
+  return config;
+});
 
 axios.interceptors.response.use(response => {
   return response;

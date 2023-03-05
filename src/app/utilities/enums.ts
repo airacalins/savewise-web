@@ -9,3 +9,8 @@ export enum BUTTON_VARIANT {
     PRIMARY = "primary",
 }
 
+// Slice Names
+export enum SLICE_NAME {
+    ACCOUNTS = "accounts",
+    USERS = "users",
+};

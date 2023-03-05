@@ -1,13 +1,23 @@
-export interface LoginUser {
+export interface UsersState {
+    isFetching: boolean,
+    user?: User,
+}
+
+export interface LoginUserInput {
     email: string,
     password: string,
 }
 
-export interface RegisterUser {
+export interface RegisterUserInput {
     firstName: string,
     lastName: string,
     userName: string,
     email: string,
     password: string,
     confirmPassword: string,
+}
+
+export interface User {
+    username: string,
+    token: string,
 }
