@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { request } from "../../api/agent";
+import { request } from "../../api/api";
 import { ACCOUNTS_API } from "../../utilities/constant";
 import { Account, FetchAccountInput } from "./types";
 
