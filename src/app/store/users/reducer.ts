@@ -20,7 +20,7 @@ export const userSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isFetching = false;
       state.user = action.payload;
-      localStorage.setItem('user', JSON.stringify(action.payload));
+      localStorage.setItem("user", JSON.stringify(action.payload));
     })
     builder.addCase(loginUser.rejected, (state, store) => {
       state.isFetching = false;

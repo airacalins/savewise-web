@@ -1,42 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { Route, Routes } from 'react-router-dom';
 import AccountOverviewPage from '../../features/account/AccountOverviewPage';
-import TestErrorPage from "../../features/errors/TestErrorPage";
+import HomeOverviewPage from '../../features/home/HomeOverviewPage';
+import TransactionOverviewPage from '../../features/transaction/TransactionOverviewPage';
 import LoginPage from '../../features/user/LoginPage';
-import { useAppDispatch } from '../store/hooks';
-import { fetchCurrentUser } from '../store/users/action';
+import { FORM_TYPE, PATH_NAME, USER_FORM } from '../utilities/enums';
 
 const App = () => {
-
-  const dispatch = useAppDispatch();
-  const user = useAppSelecter(state => state.user);
-
-  const [loading, setLoading] = useState(true);
-
-  const initApp = useCallback(
-    async () => {
-      try {
-        await dispatch(fetchCurrentUser());
-      } catch (error) {
-        console.log(error);
-      }
-    }, [dispatch])
-
-  useEffect(() => {
-    initApp().then(() => setLoading(false));
-  }, [initApp])
-
   return (
-    // <>
-    //   <AccountOverviewPage />
-    //   <TestErrorPage />
-    // </>
-    <LoginPage />
+    <Routes>
+      <Route path={PATH_NAME.ACCOUNT} element={<AccountOverviewPage />} />
+      <Route path={PATH_NAME.HOME} element={<HomeOverviewPage />} />
+      <Route path={PATH_NAME.TRANSACTION} element={<TransactionOverviewPage />} />
+      <Route path={PATH_NAME.LOGIN} element={<LoginPage formType={USER_FORM.LOGIN} />} />
+      <Route path={PATH_NAME.REGISTER} element={<LoginPage formType={USER_FORM.REGISTER} />} />
+    </Routes>
   );
 }
 
 export default App;
-function useAppSelecter(arg0: (state: any) => any) {
-  throw new Error('Function not implemented.');
-}
 

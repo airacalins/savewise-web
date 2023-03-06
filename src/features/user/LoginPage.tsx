@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
 import { loginUser } from "../../app/store/users/action";
 import { LoginUserInput, RegisterUserInput } from "../../app/store/users/types";
 import { CONFIRM_PASSWORD, EMAIL_ADDRESS, EMPTY_STRING, FIRSTNAME, LASTNAME, LOGIN, LOGIN_MESSAGE, PASSWORD, REGISTER, REGISTER_MESSAGE, SIGN_IN, SIGN_UP, USERNAME } from "../../app/utilities/constant";
-import { BUTTON_VARIANT, FORM_TYPE } from "../../app/utilities/enums";
+import { FORM_TYPE, PATH_NAME, USER_FORM, VARIANT } from "../../app/utilities/enums";
 
-const LoginPage = () => {
-  enum USER_FORM {
-    LOGIN,
-    REGISTER,
-  }
+interface Props {
+  formType: USER_FORM,
+}
 
-  const [formType, setFormType] = useState<USER_FORM>(USER_FORM.LOGIN);
+const LoginPage = ({ formType }: Props) => {
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isFetching, user } = useAppSelector(state => state.user)
 
   const [loginUserInput, setLoginUserInput] = useState<LoginUserInput>({
     email: EMPTY_STRING,
@@ -32,16 +35,16 @@ const LoginPage = () => {
 
   const registerForm = formType == USER_FORM.REGISTER;
 
-  const dispatch = useAppDispatch();
-  const { isFetching, user } = useAppSelector(state => state.user)
+  const handleSwitchForm = () => navigate(formType == USER_FORM.LOGIN ? PATH_NAME.REGISTER : PATH_NAME.LOGIN);
 
-  const handleFormType = () => setFormType(formType == USER_FORM.LOGIN ? USER_FORM.REGISTER : USER_FORM.LOGIN);
-
-  const handleLoginUser = () => dispatch(loginUser(loginUserInput));
+  const handleLoginUser = () => {
+    dispatch(loginUser(loginUserInput));
+    navigate(PATH_NAME.HOME);
+  };
 
   const handleRegisterUser = () => {
     if (registerUserInput.password != registerUserInput.confirmPassword) console.log("Not valid.")
-    return console.log(registerUserInput);
+    console.log(registerUserInput);
   };
 
   return (
@@ -127,14 +130,14 @@ const LoginPage = () => {
             <span
               className="ps-1 text-primary"
               role="button"
-              onClick={handleFormType}
+              onClick={handleSwitchForm}
             >
               {loginForm ? SIGN_UP : SIGN_IN}
             </span>
           </div>
 
           <Button
-            variant={BUTTON_VARIANT.PRIMARY}
+            variant={VARIANT.PRIMARY}
             onClick={loginForm ? handleLoginUser : handleRegisterUser}
           >
             {loginForm ? LOGIN : REGISTER}

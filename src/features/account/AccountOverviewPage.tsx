@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import NavigationContainer from "../../app/components/Navigation/NavigationContainer";
 import { fetchAccount, fetchAccounts } from "../../app/store/accounts/action";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
 
@@ -13,9 +14,19 @@ const AccountOverviewPage = () => {
 
   if (isFetching) return <h1>LOADING</h1>
 
-  return <div>
-    {accounts.map(account => <small>{account.title}</small>)}
-  </div>
+  return (
+    <NavigationContainer children={
+      <>
+        {accounts.map(account =>
+          <small>
+            {account.title}
+          </small>
+        )}
+      </>
+    } />
+  )
+
+
 }
 
 export default AccountOverviewPage;
