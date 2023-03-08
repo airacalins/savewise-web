@@ -1,6 +1,6 @@
 export interface UsersState {
     isFetching: boolean,
-    user?: User,
+    currentUser?: User,
 }
 
 export interface LoginUserInput {

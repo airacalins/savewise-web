@@ -1,5 +1,6 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useNavigate } from 'react-router-dom';
 import { NavigationPath } from '../../models/navigation_path';
 import { APP_NAME } from '../../utilities/constant';
 import { VARIANT } from '../../utilities/enums';
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const NavigationBar = ({ navigationPaths }: Props) => {
+  const navigate = useNavigate();
   return (
     <Navbar
       collapseOnSelect
@@ -29,7 +31,7 @@ const NavigationBar = ({ navigationPaths }: Props) => {
             navigationPaths.map(nav => {
               const { title, path } = nav;
 
-              return <Nav.Link href={path} className="px-4">
+              return <Nav.Link onClick={() => navigate(path)} className="px-4">
                 {title}
               </Nav.Link>;
             })

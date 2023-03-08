@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
+import { useAppDispatch } from "../../app/store/hooks";
 import { loginUser } from "../../app/store/users/action";
 import { LoginUserInput, RegisterUserInput } from "../../app/store/users/types";
 import { CONFIRM_PASSWORD, EMAIL_ADDRESS, EMPTY_STRING, FIRSTNAME, LASTNAME, LOGIN, LOGIN_MESSAGE, PASSWORD, REGISTER, REGISTER_MESSAGE, SIGN_IN, SIGN_UP, USERNAME } from "../../app/utilities/constant";
-import { FORM_TYPE, PATH_NAME, USER_FORM, VARIANT } from "../../app/utilities/enums";
+import { FORM_TYPE, ROUTE, USER_FORM, VARIANT } from "../../app/utilities/enums";
 
 interface Props {
   formType: USER_FORM,
@@ -15,7 +15,6 @@ const LoginPage = ({ formType }: Props) => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isFetching, user } = useAppSelector(state => state.user)
 
   const [loginUserInput, setLoginUserInput] = useState<LoginUserInput>({
     email: EMPTY_STRING,
@@ -35,11 +34,11 @@ const LoginPage = ({ formType }: Props) => {
 
   const registerForm = formType == USER_FORM.REGISTER;
 
-  const handleSwitchForm = () => navigate(formType == USER_FORM.LOGIN ? PATH_NAME.REGISTER : PATH_NAME.LOGIN);
+  const handleSwitchForm = () => navigate(formType == USER_FORM.LOGIN ? ROUTE.REGISTER : ROUTE.LOGIN);
 
-  const handleLoginUser = () => {
-    dispatch(loginUser(loginUserInput));
-    navigate(PATH_NAME.HOME);
+  const handleLoginUser = async () => {
+    await dispatch(loginUser(loginUserInput));
+    navigate(ROUTE.HOME);
   };
 
   const handleRegisterUser = () => {
@@ -137,7 +136,7 @@ const LoginPage = ({ formType }: Props) => {
           </div>
 
           <Button
-            variant={VARIANT.PRIMARY}
+            variant={VARIANT.DARK}
             onClick={loginForm ? handleLoginUser : handleRegisterUser}
           >
             {loginForm ? LOGIN : REGISTER}

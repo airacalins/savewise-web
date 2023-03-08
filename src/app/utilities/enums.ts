@@ -15,8 +15,9 @@ export enum SLICE_NAME {
     USERS = "users",
 };
 
-export enum PATH_NAME {
+export enum ROUTE {
     ACCOUNT = "/accounts",
+    ACCOUNT_DETAILS = "/accounts/:id",
     HOME = "/",
     LOGIN = "/login",
     REGISTER = "/register",

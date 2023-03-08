@@ -5,9 +5,9 @@ import { LoginUserInput, RegisterUserInput, User } from "./types";
 
 export const loginUser = createAsyncThunk<User, LoginUserInput>(
   "loginUser",
-  async (params, thunkAPI) => {
+  async (user, thunkAPI) => {
     try {
-      return await request.post(`${USERS_API}/login`, params);
+      return await request.post(`${USERS_API}/login`, user);
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.data })
     }
@@ -16,14 +16,14 @@ export const loginUser = createAsyncThunk<User, LoginUserInput>(
 
 export const registerUser = createAsyncThunk<boolean, RegisterUserInput>(
   "registerUser",
-  async (params, thunkAPI) => {
+  async (user, thunkAPI) => {
     try {
       return await request.post(`${USERS_API}/register`, {
-        firstName: params.firstName,
-        lastName: params.lastName,
-        username: params.userName,
-        email: params.email,
-        password: params.password,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.userName,
+        email: user.email,
+        password: user.password,
       });
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.data })
@@ -31,7 +31,7 @@ export const registerUser = createAsyncThunk<boolean, RegisterUserInput>(
   }
 );
 
-export const fetchCurrentUser = createAsyncThunk<boolean>(
+export const fetchCurrentUser = createAsyncThunk<User>(
   "fetchCurrentUser",
   async (_, thunkAPI) => {
     try {

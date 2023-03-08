@@ -1,19 +1,85 @@
-import { Route, Routes } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AccountDetailsPage from '../../features/account/AccountDetailsPage';
 import AccountOverviewPage from '../../features/account/AccountOverviewPage';
 import HomeOverviewPage from '../../features/home/HomeOverviewPage';
 import TransactionOverviewPage from '../../features/transaction/TransactionOverviewPage';
 import LoginPage from '../../features/user/LoginPage';
-import { FORM_TYPE, PATH_NAME, USER_FORM } from '../utilities/enums';
+import LoadingIndicator from '../components/Loading/LoadingIndicator';
+import { useAppDispatch } from '../store/hooks';
+import { fetchCurrentUser } from '../store/users/action';
+import { ROUTE, USER_FORM } from '../utilities/enums';
+import PrivateRoute from './PrivateRoute';
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  const dispatch = useAppDispatch();
+
+  const initApp = useCallback(
+    async () => {
+      try {
+        await dispatch(fetchCurrentUser());
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [dispatch],
+  )
+
+  useEffect(
+    () => { initApp().then(() => setLoading(false)); },
+    [initApp],
+  )
+
+  if (loading) return <LoadingIndicator />
+
   return (
-    <Routes>
-      <Route path={PATH_NAME.ACCOUNT} element={<AccountOverviewPage />} />
-      <Route path={PATH_NAME.HOME} element={<HomeOverviewPage />} />
-      <Route path={PATH_NAME.TRANSACTION} element={<TransactionOverviewPage />} />
-      <Route path={PATH_NAME.LOGIN} element={<LoginPage formType={USER_FORM.LOGIN} />} />
-      <Route path={PATH_NAME.REGISTER} element={<LoginPage formType={USER_FORM.REGISTER} />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={ROUTE.LOGIN}
+          element={<LoginPage formType={USER_FORM.LOGIN} />}
+        />
+
+        <Route
+          path={ROUTE.REGISTER}
+          element={<LoginPage formType={USER_FORM.REGISTER} />}
+        />
+
+        <Route
+          path={ROUTE.HOME}
+          element={<PrivateRoute />}
+        >
+          <Route
+            path={ROUTE.ACCOUNT}
+            element={<AccountOverviewPage />}
+          />
+
+          <Route
+            path={ROUTE.ACCOUNT_DETAILS}
+            element={<AccountDetailsPage />}
+          />
+
+          <Route
+            path={ROUTE.HOME}
+            element={<HomeOverviewPage />}
+          />
+
+          <Route
+            path={ROUTE.TRANSACTION}
+            element={<TransactionOverviewPage />}
+          />
+
+          <Route
+            path={"*"}
+            element={<h1>Not found</h1>}
+          />
+        </Route>
+
+
+      </Routes>
+    </BrowserRouter >
   );
 }
 
