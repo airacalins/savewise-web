@@ -8,6 +8,7 @@ import LoginPage from '../../features/user/LoginPage';
 import LoadingIndicator from '../components/Loading/LoadingIndicator';
 import { useAppDispatch } from '../store/hooks';
 import { fetchCurrentUser } from '../store/users/action';
+import { NOT_FOUND } from '../utilities/constant';
 import { ROUTE, USER_FORM } from '../utilities/enums';
 import PrivateRoute from './PrivateRoute';
 
@@ -37,47 +38,15 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={ROUTE.LOGIN}
-          element={<LoginPage formType={USER_FORM.LOGIN} />}
-        />
-
-        <Route
-          path={ROUTE.REGISTER}
-          element={<LoginPage formType={USER_FORM.REGISTER} />}
-        />
-
-        <Route
-          path={ROUTE.HOME}
-          element={<PrivateRoute />}
-        >
-          <Route
-            path={ROUTE.ACCOUNT}
-            element={<AccountOverviewPage />}
-          />
-
-          <Route
-            path={ROUTE.ACCOUNT_DETAILS}
-            element={<AccountDetailsPage />}
-          />
-
-          <Route
-            path={ROUTE.HOME}
-            element={<HomeOverviewPage />}
-          />
-
-          <Route
-            path={ROUTE.TRANSACTION}
-            element={<TransactionOverviewPage />}
-          />
-
-          <Route
-            path={"*"}
-            element={<h1>Not found</h1>}
-          />
+        <Route path={ROUTE.LOGIN} element={<LoginPage formType={USER_FORM.LOGIN} />} />
+        <Route path={ROUTE.REGISTER} element={<LoginPage formType={USER_FORM.REGISTER} />} />
+        <Route path={ROUTE.HOME} element={<PrivateRoute />} >
+          <Route path={ROUTE.ACCOUNT} element={<AccountOverviewPage />} />
+          <Route path={ROUTE.ACCOUNT_DETAILS} element={<AccountDetailsPage />} />
+          <Route path={ROUTE.HOME} element={<HomeOverviewPage />} />
+          <Route path={ROUTE.TRANSACTION} element={<TransactionOverviewPage />} />
+          <Route path={ROUTE.ALL} element={<h1>{NOT_FOUND}</h1>} />
         </Route>
-
-
       </Routes>
     </BrowserRouter >
   );

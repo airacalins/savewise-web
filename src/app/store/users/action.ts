@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../api/api";
-import { USERS_API } from "../../utilities/constant";
+import { LOGIN_API, REGISTER_API, USERS_API } from "../../utilities/constant";
 import { LoginUserInput, RegisterUserInput, User } from "./types";
 
 export const loginUser = createAsyncThunk<User, LoginUserInput>(
   "loginUser",
   async (user, thunkAPI) => {
     try {
-      return await request.post(`${USERS_API}/login`, user);
+      return await request.post(LOGIN_API, user);
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.data })
     }
@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk<boolean, RegisterUserInput>(
   "registerUser",
   async (user, thunkAPI) => {
     try {
-      return await request.post(`${USERS_API}/register`, {
+      return await request.post(REGISTER_API, {
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.userName,

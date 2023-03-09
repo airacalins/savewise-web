@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../../app/components/Loading/LoadingIndicator";
 import { fetchAccounts } from "../../app/store/accounts/action";
+import { Account } from "../../app/store/accounts/types";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
-import { ADD_ACCOUNT, SEE_DETAILS } from "../../app/utilities/constant";
+import { ADD_ACCOUNT, CREATE_ACCOUNT, SEE_DETAILS } from "../../app/utilities/constant";
 import { ROUTE, VARIANT } from "../../app/utilities/enums";
 
 const AccountOverviewPage = () => {
@@ -20,6 +21,10 @@ const AccountOverviewPage = () => {
     dispatch(fetchAccounts());
   }, []);
 
+  const handleShowDetails = (account: Account) => navigate(`${ROUTE.ACCOUNT}/${account.id}`);
+
+  const handleShowAccountFrom = () => setIsCreateAccount(!isCreateAccount);
+
   if (isFetching) return <LoadingIndicator />
 
   return (
@@ -29,14 +34,15 @@ const AccountOverviewPage = () => {
           variant={VARIANT.DARK}
           className="w-100 mb-3"
           style={{ height: 64 }}
-          onClick={() => setIsCreateAccount(false)}
+          onClick={handleShowAccountFrom}
         >
-          CREATE ACCOUNT
+          {CREATE_ACCOUNT}
         </Button>
       }
 
       {
-        isCreateAccount && <Form className="d-flex mb-3">
+        isCreateAccount &&
+        <Form className="d-flex mb-3">
           <Form.Group className="w-75">
             <Form.Control
               type="email"
@@ -57,26 +63,26 @@ const AccountOverviewPage = () => {
 
       {
         accounts.map(account =>
-          <div className="card mb-3">
-            <div className="card-body d-flex align-items-center justify-content-between">
+          <Card className="mb-3">
+            <Card.Body className="d-flex align-items-center justify-content-between">
               <div>
-                <h5 className="card-title">
+                <Card.Title className="card-title">
                   {account.title}
-                </h5>
+                </Card.Title>
 
-                <p className="card-text">
+                <Card.Text className="card-text">
                   {account.balance}
-                </p>
+                </Card.Text>
               </div>
 
               <Button
-                onClick={() => navigate(`${ROUTE.ACCOUNT}/${account.id}`)}
+                onClick={() => handleShowDetails(account)}
                 variant={VARIANT.DARK}
               >
                 {SEE_DETAILS}
               </Button>
-            </div>
-          </div>
+            </Card.Body>
+          </Card>
         )
       }
     </>

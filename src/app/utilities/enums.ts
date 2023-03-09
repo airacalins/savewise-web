@@ -12,6 +12,7 @@ export enum VARIANT {
 
 export enum SLICE_NAME {
     ACCOUNTS = "accounts",
+    TRANSACTIONS = "transactions",
     USERS = "users",
 };
 
@@ -22,6 +23,7 @@ export enum ROUTE {
     LOGIN = "/login",
     REGISTER = "/register",
     TRANSACTION = "/transactions",
+    ALL = "*",
 }
 
 export enum REQUEST_STATUS_MESSAGE {
