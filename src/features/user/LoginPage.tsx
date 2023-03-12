@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, Card, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import FormGroup from "../../app/components/Form/FormGroup";
 import { useAppDispatch } from "../../app/store/hooks";
-import { loginUser } from "../../app/store/users/action";
+import { loginUser, registerUser } from "../../app/store/users/action";
 import { LoginUserInput, RegisterUserInput } from "../../app/store/users/types";
 import { CONFIRM_PASSWORD, EMAIL_ADDRESS, EMPTY_STRING, FIRSTNAME, LASTNAME, LOGIN, LOGIN_MESSAGE, PASSWORD, REGISTER, REGISTER_MESSAGE, SIGN_IN, SIGN_UP, USERNAME } from "../../app/utilities/constant";
 import { FORM_TYPE, ROUTE, USER_FORM, VARIANT } from "../../app/utilities/enums";
@@ -12,7 +13,6 @@ interface Props {
 }
 
 const LoginPage = ({ formType }: Props) => {
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -41,13 +41,14 @@ const LoginPage = ({ formType }: Props) => {
     navigate(ROUTE.HOME);
   };
 
-  const handleRegisterUser = () => {
+  const handleRegisterUser = async () => {
     if (registerUserInput.password != registerUserInput.confirmPassword) console.log("Not valid.")
-    console.log(registerUserInput);
+    await dispatch(registerUser(registerUserInput))
+    navigate(ROUTE.LOGIN);
   };
 
   return (
-    <div className="vh-100 d-flex align-items-center ">
+    <div className="vh-100 d-flex align-items-center">
       <Col md={{ offset: 4, span: 4 }}>
         <Card>
           <Card.Header>
@@ -55,74 +56,58 @@ const LoginPage = ({ formType }: Props) => {
           </Card.Header>
 
           <Form className="p-5">
-            {registerForm &&
+            {
+              registerForm &&
               <>
                 <div className="d-flex">
-                  <Form.Group className="mb-3 w-50 me-2">
-                    <Form.Label>{FIRSTNAME}</Form.Label>
-                    <Form.Control
-                      type={FORM_TYPE.TEXT}
-                      placeholder={FIRSTNAME}
-                      onChange={evt => (setRegisterUserInput(prev => ({ ...prev, firstName: evt.target.value })))}
-                    />
-                  </Form.Group>
+                  <FormGroup
+                    title={FIRSTNAME}
+                    type={FORM_TYPE.TEXT}
+                    width="w-50"
+                    className="me-2"
+                    onChange={(value) => setRegisterUserInput(prev => ({ ...prev, firstName: value }))}
+                  />
 
-                  <Form.Group className="mb-3 w-50 ms-2">
-                    <Form.Label>{LASTNAME}</Form.Label>
-                    <Form.Control
-                      type={FORM_TYPE.TEXT}
-                      placeholder={LASTNAME}
-                      onChange={evt => (setRegisterUserInput(prev => ({ ...prev, lastName: evt.target.value })))}
-                    />
-                  </Form.Group>
+                  <FormGroup
+                    title={LASTNAME}
+                    type={FORM_TYPE.TEXT}
+                    width="w-50"
+                    className="ms-2"
+                    onChange={(value) => setRegisterUserInput(prev => ({ ...prev, lastName: value }))}
+                  />
                 </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>{USERNAME}</Form.Label>
-                  <Form.Control
-                    type={FORM_TYPE.TEXT}
-                    placeholder={USERNAME}
-                    onChange={evt => (setRegisterUserInput(prev => ({ ...prev, userName: evt.target.value })))}
-                  />
-                </Form.Group>
+                <FormGroup
+                  title={USERNAME}
+                  type={FORM_TYPE.TEXT}
+                  onChange={(value) => setRegisterUserInput(prev => ({ ...prev, userName: value }))}
+                />
               </>
             }
 
-            <Form.Group className="mb-3">
-              <Form.Label>{EMAIL_ADDRESS}</Form.Label>
-              <Form.Control
-                type={FORM_TYPE.EMAIL}
-                placeholder={EMAIL_ADDRESS}
-                onChange={evt =>
-                  loginForm
-                    ? setLoginUserInput(prev => ({ ...prev, email: evt.target.value }))
-                    : setRegisterUserInput(prev => ({ ...prev, email: evt.target.value }))
-                }
-              />
-            </Form.Group>
+            <FormGroup
+              title={EMAIL_ADDRESS}
+              type={FORM_TYPE.EMAIL}
+              onChange={(value) => loginForm
+                ? setLoginUserInput(prev => ({ ...prev, email: value }))
+                : setRegisterUserInput(prev => ({ ...prev, email: value }))}
+            />
 
-            <Form.Group className="mb-3">
-              <Form.Label>{PASSWORD}</Form.Label>
-              <Form.Control
+            <FormGroup
+              title={PASSWORD}
+              type={FORM_TYPE.PASSWORD}
+              onChange={(value) => loginForm
+                ? setLoginUserInput(prev => ({ ...prev, password: value }))
+                : setRegisterUserInput(prev => ({ ...prev, password: value }))}
+            />
+
+            {
+              registerForm &&
+              <FormGroup
+                title={CONFIRM_PASSWORD}
                 type={FORM_TYPE.PASSWORD}
-                placeholder={PASSWORD}
-                onChange={evt =>
-                  loginForm
-                    ? setLoginUserInput(prev => ({ ...prev, password: evt.target.value }))
-                    : setRegisterUserInput(prev => ({ ...prev, password: evt.target.value }))
-                }
+                onChange={(value) => setRegisterUserInput(prev => ({ ...prev, confirmPassword: value }))}
               />
-            </Form.Group>
-
-            {registerForm &&
-              <Form.Group className="mb-3">
-                <Form.Label>{CONFIRM_PASSWORD}</Form.Label>
-                <Form.Control
-                  type={FORM_TYPE.PASSWORD}
-                  placeholder={CONFIRM_PASSWORD}
-                  onChange={evt => (setRegisterUserInput(prev => ({ ...prev, confirmPassword: evt.target.value })))}
-                />
-              </Form.Group>
             }
 
             <div className="my-3">

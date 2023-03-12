@@ -9,8 +9,8 @@ export const APP_NAME = "SaveWise";
 export const ACTIVITIES_API = "activities";
 export const ACCOUNTS_API = "accounts";
 export const ACCOUNT_BY_ID_API = (id: string) => `accounts/${id}`;
-export const LOGIN_API = "accounts/login";
-export const REGISTER_API = "accounts/register";
+export const LOGIN_API = "users/login";
+export const REGISTER_API = "users/register";
 export const USERS_API = "users";
 export const TRANSACTIONS_API = (accountId: string) => `accounts/${accountId}/transactions`;
 
@@ -41,16 +41,16 @@ export const USERNAME = "Username";
 
 // Navigation
 export const navigationPaths: NavigationPath[] = [
-  {
-    title: HOME,
-    path: ROUTE.HOME,
-  },
-  {
-    title: ACCOUNTS,
-    path: ROUTE.ACCOUNT,
-  },
-  {
-    title: TRANSACTIONS,
-    path: ROUTE.TRANSACTION,
-  },
+    {
+        title: HOME,
+        path: ROUTE.HOME,
+    },
+    {
+        title: ACCOUNTS,
+        path: ROUTE.ACCOUNT,
+    },
+    {
+        title: TRANSACTIONS,
+        path: ROUTE.TRANSACTION,
+    },
 ]

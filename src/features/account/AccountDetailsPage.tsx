@@ -15,7 +15,7 @@ const AccountDetailsPage = () => {
   const { id } = useParams();
 
   const fetchAccountTransactions = async () => {
-    if (!id) return;
+    if (!!!id) return console.log("Not found");
     await dispatch(fetchAccount({ id }));
     await dispatch(fetchTransactions({ accountId: id }));
   }
