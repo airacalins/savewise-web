@@ -1,5 +1,5 @@
 import { NavigationPath } from "../models/navigation_path";
-import { ROUTE } from "./enums";
+import { ROUTE_NAME } from "./enums";
 
 // App
 export const APP_BASE_URL = "http://localhost:5000/api";
@@ -19,7 +19,7 @@ export const ADD_ACCOUNT = "Add Account";
 export const ACCOUNTS = "Accounts";
 export const ACCOUNT_CREATED = "Account Created";
 export const CONFIRM_PASSWORD = "Confirm Password";
-export const CREATE_ACCOUNT = "Create Accout";
+export const CREATE_ACCOUNT = "Create Account";
 export const EMAIL_ADDRESS = "Email Address";
 export const EMPTY_STRING = "";
 export const FIRSTNAME = "First Name";
@@ -43,14 +43,14 @@ export const USERNAME = "Username";
 export const navigationPaths: NavigationPath[] = [
     {
         title: HOME,
-        path: ROUTE.HOME,
+        path: ROUTE_NAME.HOME,
     },
     {
         title: ACCOUNTS,
-        path: ROUTE.ACCOUNT,
+        path: ROUTE_NAME.ACCOUNT,
     },
     {
         title: TRANSACTIONS,
-        path: ROUTE.TRANSACTION,
+        path: ROUTE_NAME.TRANSACTION,
     },
 ]

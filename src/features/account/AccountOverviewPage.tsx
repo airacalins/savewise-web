@@ -6,7 +6,7 @@ import { fetchAccounts } from "../../app/store/accounts/action";
 import { Account } from "../../app/store/accounts/types";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
 import { ADD_ACCOUNT, CREATE_ACCOUNT, SEE_DETAILS } from "../../app/utilities/constant";
-import { ROUTE, VARIANT } from "../../app/utilities/enums";
+import { ROUTE_NAME, VARIANT } from "../../app/utilities/enums";
 
 const AccountOverviewPage = () => {
 
@@ -21,7 +21,7 @@ const AccountOverviewPage = () => {
     dispatch(fetchAccounts());
   }, []);
 
-  const handleShowDetails = (account: Account) => navigate(`${ROUTE.ACCOUNT}/${account.id}`);
+  const handleShowDetails = (account: Account) => navigate(`${ROUTE_NAME.ACCOUNT}/${account.id}`);
 
   const handleShowAccountFrom = () => setIsCreateAccount(!isCreateAccount);
 

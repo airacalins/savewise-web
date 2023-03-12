@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../app/store/hooks";
 import { loginUser, registerUser } from "../../app/store/users/action";
 import { LoginUserInput, RegisterUserInput } from "../../app/store/users/types";
 import { CONFIRM_PASSWORD, EMAIL_ADDRESS, EMPTY_STRING, FIRSTNAME, LASTNAME, LOGIN, LOGIN_MESSAGE, PASSWORD, REGISTER, REGISTER_MESSAGE, SIGN_IN, SIGN_UP, USERNAME } from "../../app/utilities/constant";
-import { FORM_TYPE, ROUTE, USER_FORM, VARIANT } from "../../app/utilities/enums";
+import { FORM_TYPE, ROUTE_NAME, USER_FORM, VARIANT } from "../../app/utilities/enums";
 
 interface Props {
   formType: USER_FORM,
@@ -34,17 +34,17 @@ const LoginPage = ({ formType }: Props) => {
 
   const registerForm = formType == USER_FORM.REGISTER;
 
-  const handleSwitchForm = () => navigate(formType == USER_FORM.LOGIN ? ROUTE.REGISTER : ROUTE.LOGIN);
+  const handleSwitchForm = () => navigate(formType == USER_FORM.LOGIN ? ROUTE_NAME.REGISTER : ROUTE_NAME.LOGIN);
 
   const handleLoginUser = async () => {
     await dispatch(loginUser(loginUserInput));
-    navigate(ROUTE.HOME);
+    navigate(ROUTE_NAME.HOME);
   };
 
   const handleRegisterUser = async () => {
     if (registerUserInput.password != registerUserInput.confirmPassword) console.log("Not valid.")
     await dispatch(registerUser(registerUserInput))
-    navigate(ROUTE.LOGIN);
+    navigate(ROUTE_NAME.LOGIN);
   };
 
   return (
