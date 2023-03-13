@@ -15,7 +15,7 @@ export interface FetchAccountInput {
   id: string
 }
 
-export interface CreateAccount {
+export interface CreateAccountInput {
   title: string
 }
 

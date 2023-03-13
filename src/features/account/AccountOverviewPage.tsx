@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import FormGroup from "../../app/components/Form/FormGroup";
 import LoadingIndicator from "../../app/components/Loading/LoadingIndicator";
-import { fetchAccounts } from "../../app/store/accounts/action";
-import { Account } from "../../app/store/accounts/types";
+import { createAccount, fetchAccounts } from "../../app/store/accounts/action";
+import { Account, CreateAccountInput } from "../../app/store/accounts/types";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
-import { ADD_ACCOUNT, CREATE_ACCOUNT, SEE_DETAILS } from "../../app/utilities/constant";
-import { ROUTE_NAME, VARIANT } from "../../app/utilities/enums";
+import { ADD_ACCOUNT, EMPTY_STRING, SEE_DETAILS, TITLE } from "../../app/utilities/constant";
+import { FORM_TYPE, ROUTE_NAME, VARIANT } from "../../app/utilities/enums";
 
 const AccountOverviewPage = () => {
-
-  const [isCreateAccount, setIsCreateAccount] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
   const { isFetching, accounts } = useAppSelector(state => state.account)
 
   const navigate = useNavigate();
+
+  const [createAccountInput, setCreateAccountInput] = useState<CreateAccountInput>({
+    title: EMPTY_STRING,
+  })
 
   useEffect(() => {
     dispatch(fetchAccounts());
@@ -23,43 +25,37 @@ const AccountOverviewPage = () => {
 
   const handleShowDetails = (account: Account) => navigate(`${ROUTE_NAME.ACCOUNT}/${account.id}`);
 
-  const handleShowAccountFrom = () => setIsCreateAccount(!isCreateAccount);
+  const handleCreateAccount = async () => {
+    await dispatch(createAccount(createAccountInput))
+    await dispatch(fetchAccounts())
+  }
 
   if (isFetching) return <LoadingIndicator />
 
   return (
     <>
-      {
-        !isCreateAccount && <Button
-          variant={VARIANT.DARK}
-          className="w-100 mb-3"
-          style={{ height: 64 }}
-          onClick={handleShowAccountFrom}
-        >
-          {CREATE_ACCOUNT}
-        </Button>
-      }
-
-      {
-        isCreateAccount &&
-        <Form className="d-flex mb-3">
-          <Form.Group className="w-75">
-            <Form.Control
-              type="email"
-              placeholder="Title"
-              className="py-3"
+      <Form className="mb-5">
+        <Row>
+          <Col md={{ span: 9 }}>
+            <FormGroup
+              placeholder={TITLE}
+              type={FORM_TYPE.TEXT}
+              margin="m-0"
+              onChange={(value) => setCreateAccountInput(_ => ({ title: value }))}
             />
-          </Form.Group>
+          </Col>
 
-          <Button
-            variant={VARIANT.DARK}
-            className="w-25 ms-3"
-          >
-            {ADD_ACCOUNT}
-          </Button>
-        </Form>
-      }
-
+          <Col md={{ span: 3 }}>
+            <Button
+              variant={VARIANT.DARK}
+              className="py-3 px-5 w-100"
+              onClick={handleCreateAccount}
+            >
+              {ADD_ACCOUNT}
+            </Button>
+          </Col>
+        </Row>
+      </Form>
 
       {
         accounts.map(account =>

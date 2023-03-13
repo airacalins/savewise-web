@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../api/api";
 import { ACCOUNTS_API, ACCOUNT_BY_ID_API } from "../../utilities/constant";
-import { Account, FetchAccountInput } from "./types";
+import { Account, CreateAccountInput, FetchAccountInput } from "./types";
 
 export const fetchAccounts = createAsyncThunk<Account[]>(
   "fetchAccounts",
@@ -19,6 +19,17 @@ export const fetchAccount = createAsyncThunk<Account, FetchAccountInput>(
   async ({ id }, thunkAPI) => {
     try {
       return await request.get(ACCOUNT_BY_ID_API(id));
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data })
+    }
+  }
+);
+
+export const createAccount = createAsyncThunk<boolean, CreateAccountInput>(
+  "createAccount",
+  async ({ title }, thunkAPI) => {
+    try {
+      return await request.post(ACCOUNTS_API, { title: title });
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.data })
     }

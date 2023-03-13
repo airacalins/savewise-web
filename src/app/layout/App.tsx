@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AccountDetailsPage from '../../features/account/AccountDetailsPage';
 import AccountOverviewPage from '../../features/account/AccountOverviewPage';
 import HomeOverviewPage from '../../features/home/HomeOverviewPage';
-import TransactionOverviewPage from '../../features/transaction/TransactionOverviewPage';
 import LoginPage from '../../features/user/LoginPage';
 import LoadingIndicator from '../components/Loading/LoadingIndicator';
 import { useAppDispatch } from '../store/hooks';
@@ -44,7 +43,6 @@ const App = () => {
           <Route path={ROUTE_NAME.ACCOUNT} element={<AccountOverviewPage />} />
           <Route path={ROUTE_NAME.ACCOUNT_DETAILS} element={<AccountDetailsPage />} />
           <Route path={ROUTE_NAME.HOME} element={<HomeOverviewPage />} />
-          <Route path={ROUTE_NAME.TRANSACTION} element={<TransactionOverviewPage />} />
           <Route path={ROUTE_NAME.ALL} element={<h1>{NOT_FOUND}</h1>} />
         </Route>
       </Routes>

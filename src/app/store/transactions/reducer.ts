@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SLICE_NAME } from "../../utilities/enums";
-import { fetchTransactions } from "./action";
+import { createTransaction, fetchTransactions } from "./action";
 import { TransactionState } from "./types";
 
 export const initialState: TransactionState = {
@@ -23,6 +23,17 @@ export const transactionSlice = createSlice({
       state.transactions = action.payload;
     })
     builder.addCase(fetchTransactions.rejected, (state, _) => {
+      state.isFetching = false;
+    })
+
+    // Create transaction
+    builder.addCase(createTransaction.pending, (state, _) => {
+      state.isFetching = true;
+    })
+    builder.addCase(createTransaction.fulfilled, (state, _) => {
+      state.isFetching = false;
+    })
+    builder.addCase(createTransaction.rejected, (state, _) => {
       state.isFetching = false;
     })
   }

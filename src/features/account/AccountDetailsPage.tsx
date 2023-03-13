@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, ListGroup, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import FormGroup from "../../app/components/Form/FormGroup";
 import Loading from "../../app/components/Loading/LoadingIndicator";
 import { fetchAccount } from "../../app/store/accounts/action";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
 import { fetchTransactions } from "../../app/store/transactions/action";
-import { ACCOUNT_CREATED, BALANCE, TRANSACTIONS } from "../../app/utilities/constant";
+import { ACCOUNT_CREATED, ADD_TRANSACTION, BALANCE, CREATE, EXPENSE, INCOME, NO_TRANSACTIONS, TITLE, TRANSACTIONS } from "../../app/utilities/constant";
+import { FORM_TYPE, VARIANT } from "../../app/utilities/enums";
 
 const AccountDetailsPage = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +30,13 @@ const AccountDetailsPage = () => {
 
   return (
     <Row>
-      <Col md={{ span: 3 }}>
+      <Col md={{ span: 8 }}>
+        <h3>{TRANSACTIONS}</h3>
+        {transactions.length == 0 && <h1>{NO_TRANSACTIONS}</h1>}
+        {transactions.map(transaction => <h1>{transaction.amount}</h1>)}
+      </Col>
+
+      <Col md={{ span: 4 }}>
         <Card>
           <Card.Title className="p-3">
             {account?.title}
@@ -45,16 +53,47 @@ const AccountDetailsPage = () => {
             </ListGroup.Item>
           </ListGroup>
         </Card>
-      </Col>
 
-      <Col md={{ span: 9 }}>
-        <h3>{TRANSACTIONS}</h3>
-        {
-          transactions.length == 0 && <h1>No transactions</h1>
-        }
-        {
-          transactions.map(transaction => <h1>{transaction.amount}</h1>)
-        }
+        <div className="pt-5 pb-2">
+          <h3>{ADD_TRANSACTION}</h3>
+        </div>
+
+        <Form>
+          <Row className="mb-3">
+            <Col md={{ span: 6 }}>
+              <Form.Check
+                inline
+                label={INCOME}
+                type={FORM_TYPE.RADIO}
+                name="transactionType"
+                onChange={() => { }}
+              />
+            </Col>
+
+            <Col md={{ span: 6 }}>
+              <Form.Check
+                inline
+                label={EXPENSE}
+                type={FORM_TYPE.RADIO}
+                name="transactionType"
+                onChange={() => { }}
+              /></Col>
+          </Row>
+
+          <FormGroup
+            placeholder={TITLE}
+            type={FORM_TYPE.TEXT}
+            onChange={(value) => { }}
+          />
+
+          <Button
+            className="w-100 py-3"
+            variant={VARIANT.DARK}
+            onClick={() => { }}
+          >
+            {CREATE}
+          </Button>
+        </Form>
       </Col>
     </Row>
   )

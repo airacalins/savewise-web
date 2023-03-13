@@ -31,7 +31,7 @@ const NavigationBar = ({ navigationPaths }: Props) => {
             navigationPaths.map(nav => {
               const { title, path } = nav;
 
-              return <Nav.Link onClick={() => navigate(path)} className="px-4">
+              return <Nav.Link key={title} onClick={() => navigate(path)} className="px-4">
                 {title}
               </Nav.Link>;
             })

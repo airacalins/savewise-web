@@ -13,11 +13,16 @@ export enum REQUEST_STATUS_MESSAGE {
 export enum ROUTE_NAME {
     ACCOUNT = "/accounts",
     ACCOUNT_DETAILS = "/accounts/:id",
+    ALL = "*",
     HOME = "/",
     LOGIN = "/login",
     REGISTER = "/register",
     TRANSACTION = "/transactions",
-    ALL = "*",
+}
+
+export enum TRANSACTION_TYPE {
+    INCOME,
+    EXPENSE,
 }
 
 export enum USER_FORM {
@@ -30,6 +35,7 @@ export enum FORM_TYPE {
     TEXT = "text",
     EMAIL = "email",
     PASSWORD = "password",
+    RADIO = "radio",
 }
 
 export enum VARIANT {
