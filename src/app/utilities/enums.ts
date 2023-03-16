@@ -1,5 +1,6 @@
 export enum SLICE_NAME {
     ACCOUNTS = "accounts",
+    ACTIVITIES = "activities",
     TRANSACTIONS = "transactions",
     USERS = "users",
 };

@@ -19,6 +19,11 @@ export interface CreateAccountInput {
   title: string
 }
 
-export interface UpdateAccount {
+export interface UpdateAccountInput {
+  id: string
   title: string
+}
+
+export interface DeleteAccountInput {
+  id: string
 }

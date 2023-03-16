@@ -21,3 +21,16 @@ export interface CreateTransactionInput {
   amount: number,
   dateCreated: string,
 }
+
+export interface UpdateTransactionInput {
+  accountId: string,
+  id: string,
+  transactionType: number,
+  amount: number,
+  dateCreated: string,
+}
+
+export interface DeleteTransactionInput {
+  accountId: string,
+  id: string,
+}

@@ -7,13 +7,14 @@ interface Props {
     type: FORM_TYPE,
     title?: string,
     placeholder?: string,
+    value?: string,
     className?: string,
     margin?: string,
     width?: "w-25" | "w-50" | "w-75" | "w-100",
     onChange: (value: string) => void,
 }
 
-const FormGroup = ({ onChange, title, placeholder, type, className, margin = "mb-3", width = "w-100" }: Props) => {
+const FormGroup = ({ onChange, title, placeholder, type, value, className, margin = "mb-3", width = "w-100" }: Props) => {
     const [isInputEmpty, setIsInputEmpty] = useState<boolean>(false);
 
     return (
@@ -26,6 +27,7 @@ const FormGroup = ({ onChange, title, placeholder, type, className, margin = "mb
                     type={type}
                     placeholder={placeholder}
                     className="py-3"
+                    value={value}
                     isInvalid={isInputEmpty}
                     onChange={(evt) => {
                         setIsInputEmpty(evt.target.value == EMPTY_STRING ? true : false);

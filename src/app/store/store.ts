@@ -1,5 +1,6 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { accountReducer } from "./accounts/reducer";
+import { activityReducer } from "./activities/reducer";
 import { transactionReducer } from "./transactions/reducer";
 import { userReducer } from "./users/reducer";
 
@@ -7,6 +8,7 @@ export const store = configureStore(
   {
     reducer: {
       account: accountReducer,
+      activity: activityReducer,
       transaction: transactionReducer,
       user: userReducer,
     },
