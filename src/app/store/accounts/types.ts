@@ -5,25 +5,25 @@ export interface AccountsState {
 }
 
 export interface Account {
-  id: string
-  title: string
-  balance: number
-  dateCreated: string
+  id: string,
+  title: string,
+  balance: number,
+  dateCreated: string,
 }
 
 export interface FetchAccountInput {
-  id: string
+  id: string,
 }
 
 export interface CreateAccountInput {
-  title: string
+  title: string,
 }
 
 export interface UpdateAccountInput {
-  id: string
-  title: string
+  id: string,
+  title: string,
 }
 
 export interface DeleteAccountInput {
-  id: string
+  id: string,
 }

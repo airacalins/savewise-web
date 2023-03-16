@@ -27,7 +27,7 @@ const FormGroup = ({ onChange, title, placeholder, type, value, className, margi
                     type={type}
                     placeholder={placeholder}
                     className="py-3"
-                    value={value}
+                    defaultValue={value}
                     isInvalid={isInputEmpty}
                     onChange={(evt) => {
                         setIsInputEmpty(evt.target.value == EMPTY_STRING ? true : false);

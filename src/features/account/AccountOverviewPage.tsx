@@ -24,15 +24,21 @@ const AccountOverviewPage = () => {
     title: EMPTY_STRING,
   })
 
-  const [isCreatingAccount, setIsCreatingAccount] = useState(false)
-
   const [selectedAccount, setSelectedAccount] = useState<Account>();
 
-  useEffect(() => {
-    dispatch(fetchAccounts());
-  }, []);
+  useEffect(
+    () => {
+      dispatch(fetchAccounts());
+      console.log('f', selectedAccount);
+    },
+    [],
+  );
 
   const handleShowDetails = (account: Account) => navigate(`${ROUTE_NAME.ACCOUNT}/${account.id}`);
+
+  const handleCreateFormShow = () => setSelectedAccount(undefined);
+
+  const handleEditFormShow = (account: Account) => setSelectedAccount(account);
 
   const handleCreateAccount = async () => {
     await dispatch(createAccount(createAccountInput));
@@ -41,6 +47,7 @@ const AccountOverviewPage = () => {
 
   const handleUpdateAccount = async () => {
     await dispatch(updateAccount(updateAccountInput));
+
     await dispatch(fetchAccounts());
   }
 
@@ -48,24 +55,25 @@ const AccountOverviewPage = () => {
 
   return (
     <>
+
       <Row>
         <Col>
-          <div className="mb-3">
-            <Button
-              variant={VARIANT.DARK}
-              onClick={() => {
-                setIsCreatingAccount(true);
-                setSelectedAccount(undefined)
-              }}
-            >
-              +
-            </Button>
+          {!!selectedAccount &&
+            <div className="mb-3 d-flex align-items-center">
+              <Button
+                variant={VARIANT.DARK}
+                onClick={handleCreateFormShow}
+              >
+                +
+              </Button>
 
-            <small className="ms-2">Create Account</small>
-          </div>
+              <h5 className="ms-2 m-0">{CREATE_ACCOUNT}</h5>
+            </div>
+          }
+
           {
             accounts.map(account =>
-              <Card className="mb-3">
+              <Card key={account.id} className="mb-3">
                 <Card.Body className="d-flex align-items-center justify-content-between">
                   <div>
                     <Card.Title className="card-title">
@@ -78,10 +86,7 @@ const AccountOverviewPage = () => {
                   </div>
                   <div>
                     <Button
-                      onClick={() => {
-                        setSelectedAccount(account);
-                        handleUpdateAccount();
-                      }}
+                      onClick={() => handleEditFormShow(account)}
                       variant={VARIANT.DARK}
                       className="me-2"
                     >
@@ -103,9 +108,9 @@ const AccountOverviewPage = () => {
 
         <Col md={{ span: 4 }}>
           {
-            isCreatingAccount && <Card className="px-3 py-5">
+            <Card className="px-3 py-5">
               <h3 className="mb-5">
-                {selectedAccount == null && isCreatingAccount ? CREATE_ACCOUNT : EDIT_ACCOUNT}
+                {selectedAccount ? EDIT_ACCOUNT : CREATE_ACCOUNT}
               </h3>
 
               <Form>
@@ -113,13 +118,17 @@ const AccountOverviewPage = () => {
                   placeholder={TITLE}
                   type={FORM_TYPE.TEXT}
                   value={selectedAccount != undefined ? selectedAccount.title : EMPTY_STRING}
-                  onChange={(value) => setCreateAccountInput(_ => ({ title: value }))}
+                  onChange={(value) => selectedAccount
+                    ? setUpdateAccountInput((_) => ({ id: selectedAccount.id, title: value }))
+                    : setCreateAccountInput((_) => ({ title: value }))
+                  }
                 />
 
                 <Button
+                  type="submit"
                   variant={VARIANT.DARK}
                   className="py-3 px-5 w-100"
-                  onClick={handleCreateAccount}
+                  onClick={selectedAccount != undefined ? handleUpdateAccount : handleCreateAccount}
                 >
                   {selectedAccount != undefined ? EDIT_ACCOUNT : ADD_ACCOUNT}
                 </Button>
