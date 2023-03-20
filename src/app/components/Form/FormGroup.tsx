@@ -31,7 +31,7 @@ const FormGroup = ({ onChange, title, placeholder, type, value, className, margi
                     isInvalid={isInputEmpty}
                     onChange={(evt) => {
                         setIsInputEmpty(evt.target.value == EMPTY_STRING ? true : false);
-                        return (onChange(evt.target.value));
+                        onChange(evt.target.value);
                     }}
                 />
                 {isInputEmpty &&

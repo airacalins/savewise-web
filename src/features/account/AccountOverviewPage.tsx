@@ -43,6 +43,7 @@ const AccountOverviewPage = () => {
   const handleCreateAccount = async () => {
     await dispatch(createAccount(createAccountInput));
     await dispatch(fetchAccounts());
+
   }
 
   const handleUpdateAccount = async () => {
@@ -125,7 +126,6 @@ const AccountOverviewPage = () => {
                 />
 
                 <Button
-                  type="submit"
                   variant={VARIANT.DARK}
                   className="py-3 px-5 w-100"
                   onClick={selectedAccount != undefined ? handleUpdateAccount : handleCreateAccount}

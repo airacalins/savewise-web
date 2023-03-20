@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AccountDetailsPage from '../../features/account/AccountDetailsPage';
+import AccountDetailsPage from '../../features/transaction/TransactionOverviewPage';
 import AccountOverviewPage from '../../features/account/AccountOverviewPage';
-import HomeOverviewPage from '../../features/home/HomeOverviewPage';
 import LoginPage from '../../features/user/LoginPage';
 import LoadingIndicator from '../components/Loading/LoadingIndicator';
 import { useAppDispatch } from '../store/hooks';
@@ -39,10 +38,9 @@ const App = () => {
       <Routes>
         <Route path={ROUTE_NAME.LOGIN} element={<LoginPage formType={USER_FORM.LOGIN} />} />
         <Route path={ROUTE_NAME.REGISTER} element={<LoginPage formType={USER_FORM.REGISTER} />} />
-        <Route path={ROUTE_NAME.HOME} element={<PrivateRoute />} >
+        <Route path={ROUTE_NAME.ACCOUNT} element={<PrivateRoute />} >
           <Route path={ROUTE_NAME.ACCOUNT} element={<AccountOverviewPage />} />
           <Route path={ROUTE_NAME.ACCOUNT_DETAILS} element={<AccountDetailsPage />} />
-          <Route path={ROUTE_NAME.HOME} element={<HomeOverviewPage />} />
           <Route path={ROUTE_NAME.ALL} element={<h1>{NOT_FOUND}</h1>} />
         </Route>
       </Routes>

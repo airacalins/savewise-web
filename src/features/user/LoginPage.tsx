@@ -38,7 +38,7 @@ const LoginPage = ({ formType }: Props) => {
 
   const handleLoginUser = async () => {
     await dispatch(loginUser(loginUserInput));
-    navigate(ROUTE_NAME.HOME);
+    navigate(ROUTE_NAME.ACCOUNT);
   };
 
   const handleRegisterUser = async () => {

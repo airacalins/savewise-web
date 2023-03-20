@@ -11,6 +11,7 @@ interface Props {
 
 const NavigationBar = ({ navigationPaths }: Props) => {
   const navigate = useNavigate();
+
   return (
     <Navbar
       collapseOnSelect

@@ -25,17 +25,20 @@ export const ADD_ACCOUNT = "Add Account";
 export const ADD_TRANSACTION = "Add transaction";
 export const ACCOUNTS = "Accounts";
 export const ACCOUNT_CREATED = "Account Created";
+export const ACTIVITIES = "Activities";
+export const AMOUNT = "Amount";
 export const BALANCE = "Balance";
 export const CONFIRM_PASSWORD = "Confirm Password";
 export const CREATE = "Create";
 export const CREATE_ACCOUNT = "Create Account";
+export const DATE_CREATED = "Date Created";
+export const DELETE = "Delete";
 export const EDIT = "Edit";
 export const EDIT_ACCOUNT = "Edit Account";
 export const EMAIL_ADDRESS = "Email Address";
 export const EMPTY_STRING = "";
 export const EXPENSE = "Expense";
 export const FIRSTNAME = "First Name";
-export const HOME = "Home";
 export const INCOME = "Income";
 export const LASTNAME = "Last Name";
 export const LOADING = "Loading...";
@@ -56,15 +59,11 @@ export const USERNAME = "Username";
 // Navigation
 export const navigationPaths: NavigationPath[] = [
     {
-        title: HOME,
-        path: ROUTE_NAME.HOME,
-    },
-    {
         title: ACCOUNTS,
         path: ROUTE_NAME.ACCOUNT,
     },
     {
-        title: TRANSACTIONS,
-        path: ROUTE_NAME.TRANSACTION,
+        title: ACTIVITIES,
+        path: ROUTE_NAME.ACCTIVITIES,
     },
 ]
